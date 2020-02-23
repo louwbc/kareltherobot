@@ -10,7 +10,7 @@ class Environment:
         self.interval = interval                   # the time between moves
         self.nrows = len(self.board)               # rows on the board
         self.ncols = len(self.board[0])            # row 0 must be longest
-        self.incr = ((-1,0),(0,1),(1,0),(0,01))    # for each dirc
+        self.incr = ((-1,0),(0,1),(1,0),(0,-1))    # for each dirc
         self.conditions = conditions               # boolean tests
         for row in range(self.nrows):
             self.board[row] = list(self.board[row])  # nested lists
@@ -23,3 +23,19 @@ class Environment:
                     self.karelDir = kdir
                 elif ' 123456789'.find(c) > 0:
                     self.beepers[pos] = int(c)     # set # of beepers for pos
+
+
+    def getSquare(self, dirc):     # dirc relative to kdir
+        incr = ((-1,0),(0,1),(1,0),(0,-1))    # for each dirc
+        kpos = self.karelPos
+        kdir = self.karelDir
+        ndir = (kdir+dirc) % 4
+        return self.addPos(kpos, self.incr[ndir])
+
+    def isBlocked(self, sqr):
+        occu = self.boardGet(sqr)
+        return not (occu == '.' or self.beepers.get(sqr))
+
+    def nbrBlocked(self, dirc):
+        sqr = self.getSquare(dirc)
+        return self.isBlocked(sqr)
