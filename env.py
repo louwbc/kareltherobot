@@ -39,3 +39,51 @@ class Environment:
     def nbrBlocked(self, dirc):
         sqr = self.getSquare(dirc)
         return self.isBlocked(sqr)
+
+    def move(self):
+        kdir = self.karelDir
+        kpos = self.karelPos
+        dest = self.getSquare(0)    # one square ahead
+        beeps = self.beepers.get(kpos)
+        sym = self.boadGet(kpos)
+        if not self.isBlocked(dest):
+            self.boardPut(dest, sym)        # Place Karel here
+            self.karelPos = dest
+            if beeps:
+                old = str(beeps)[0]         # just room for 1 digit
+            else:
+                old = '.'
+            self.boardPut(kpos, old)        # replace prev content
+        else:
+            self.fatal('move is blocked')
+        self.printBoard()
+
+    def pickbeeper(self):
+        kpos = self.karelPos
+        if not self.beepers.get(kpos):
+            self.fatal('No beeper to pick up')
+        else:
+            self.beepers[kpos] -= 1
+            self.karelBeepers += 1
+        self.printBoard()
+
+    def putbeeper(self):
+        kpos = self.karelPos
+        if not self.karelBeepers:
+            self.fatal('No beeper to put down')
+        else:
+            self.beepers[kpos] = self.beepers.get(kpos, 0) + 1
+            self.karelBeepers -= 1
+        self.printBoard()
+
+    def turnleft(self):
+        self.karelDir = (self.karelDir-1) % 4  # 0-3 to the left
+        row, col = self.karelPos
+        self.board[row][col] = '^>v<'[self.karelDir]
+        self.printBoard()
+
+    def printBoard(self):
+        time.sleep(self.interval)
+        os.system('clear')
+        for row in range(self.nrows):
+            print ''.join(self.board[row])           # make a stirng from list
