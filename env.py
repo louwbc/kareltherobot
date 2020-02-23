@@ -1,3 +1,6 @@
+import os
+import time
+
 class Environment:
     """The world of Karel """ 
     def __init__(self, text, fatal, interval=.3):
@@ -87,3 +90,25 @@ class Environment:
         os.system('clear')
         for row in range(self.nrows):
             print ''.join(self.board[row])           # make a stirng from list
+
+
+conditions = {
+    "facing-north"                    : lambda env: env.karelDir == 0,
+    "not-facing-north"                : lambda env: env.karelDir != 0,
+    "facing-east"                     : lambda env: env.karelDir == 1,
+    "not-facing-east"                 : lambda env: env.karelDir != 1,
+    "facing-south"                    : lambda env: env.karelDir == 2,
+    "not-facing-south"                : lambda env: env.karelDir != 2,
+    "facing-west"                     : lambda env: env.karelDir == 3,
+    "not-facing-west"                 : lambda env: env.karelDir != 3,
+    "front-is-clear"                  : lambda env: not env.nbrBlocked(0),
+    "front-is-blocked"                : lambda env:     env.nbrBlocked(0),
+    "right-is-clear"                  : lambda env: not env.nbrBlocked(1),
+    "right-is-blocked"                : lambda env:     env.nbrBlocked(1),
+    "left-is-clear"                   : lambda env: not env.nbrBlocked(3),
+    "left-is-blocked"                 : lambda env:     env.nbrBlocked(3),
+    "next-to-a-beeper"                : lambda env: env.beepers.get(env.karelPos) > 0,
+    "not-next-to-a-beeper"            : lambda env: env.beepers.get(env.karelPos) < 1,
+    "any-beepers-in-beeper-bag"       : lambda env: env.karelBeepers > 0,
+    "no-beepers-in-beeper-bag"        : lambda env: env.karelBeepers <1,
+}
