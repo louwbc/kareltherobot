@@ -56,7 +56,7 @@ class Environment:
         kpos = self.karelPos
         dest = self.getSquare(0)    # one square ahead
         beeps = self.beepers.get(kpos)
-        sym = self.boadGet(kpos)
+        sym = self.boardGet(kpos)
         if not self.isBlocked(dest):
             self.boardPut(dest, sym)        # Place Karel here
             self.karelPos = dest
