@@ -44,4 +44,8 @@ env.move()
 print "test cond"
 env.test('front-is-clear')
 
+print "test move blocked"
+env.turnleft()
+env.move()
+
 print "test done"
