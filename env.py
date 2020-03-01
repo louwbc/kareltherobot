@@ -98,6 +98,9 @@ class Environment:
         os.system('clear')
         for row in range(self.nrows):
             print ''.join(self.board[row])           # make a stirng from list
+    
+    def test(self, cond):
+        return conditions[cond](self)
 
 
 conditions = {

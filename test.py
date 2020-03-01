@@ -41,4 +41,7 @@ env.putbeeper()
 print "move"
 env.move()
 
+print "test cond"
+env.test('front-is-clear')
+
 print "test done"
