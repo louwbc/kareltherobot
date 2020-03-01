@@ -27,6 +27,14 @@ class Environment:
                 elif ' 123456789'.find(c) > 0:
                     self.beepers[pos] = int(c)     # set # of beepers for pos
 
+    def addPos(self, pos, incr):
+        return(pos[0]+incr[0], pos[1]+incr[1])
+
+    def boardGet(self, pos):
+        return self.board[pos[0]][pos[1]]
+
+    def boardPut(self, pos, sym):
+        self.board[pos[0]][pos[1]] = sym
 
     def getSquare(self, dirc):     # dirc relative to kdir
         incr = ((-1,0),(0,1),(1,0),(0,-1))    # for each dirc
