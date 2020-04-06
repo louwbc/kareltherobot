@@ -1,5 +1,5 @@
 class Lang():
-    def __init__():
+    def __init__(self, env, source):
         self.env = env
         self.conditions = env.conditions
         self.words = source.split()        # Make prog a list of words
